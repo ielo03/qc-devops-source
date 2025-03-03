@@ -1,0 +1,85 @@
+/* Styling for the main container */
+.base-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  /*background-color: white;*/
+  /*border: 1px solid #ccc;*/
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h4 {
+  margin: 10px;
+}
+
+.inside-li {
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+/* Styling for the header */
+.qcHeader {
+  font-size: 2em;
+  text-align: center;
+}
+
+/* Styling for the labels */
+label {
+  font-size: 1em;
+  color: #C8C8C8;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+/* Styling for the textarea */
+textarea {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid #191919;
+  border-radius: 4px;
+  font-size: 1em;
+  resize: vertical;
+  background-color: #555;
+  color: #dbdbdb;
+}
+
+/* Styling for the select dropdown */
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #191919;
+  border-radius: 4px;
+  font-size: 1em;
+  background-color: #555;
+  color: #dbdbdb;
+}
+
+/* Styling for the button */
+input[type="button"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #dbdbdb;
+  border: none;
+  border-radius: 4px;
+  font-size: 1em;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+input[type="button"]:hover {
+  background-color: #0056b3;
+}
+
+/* Styling for the recipe output */
+#recipe {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #555;
+  border: 1px solid #191919;
+  border-radius: 4px;
+  font-size: 1em;
+  color: #dbdbdb;
+}
