@@ -1,5 +1,5 @@
 const get = (req, res) => {
-    res.render("questionablecocktailsHome", {
+    return res.render("questionablecocktailsHome", {
         style: "/styles/questionablecocktails.css",
         script: "/scripts/questionablecocktailsHome.js",
         title: "Questionable Cocktails",

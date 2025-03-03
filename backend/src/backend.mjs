@@ -3,7 +3,7 @@ import env from "../environment.mjs";
 
 import routes from "./routes.mjs";
 
-const app = express();
+export const app = express();
 
 app.use(express.urlencoded({extended: true}));
 

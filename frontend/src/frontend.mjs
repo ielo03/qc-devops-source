@@ -4,7 +4,7 @@ import env from "../environment.mjs";
 import hbs from "express-handlebars";
 import routes from "./routes.mjs";
 
-const app = express();
+export const app = express();
 
 app.set("view engine", "hbs");
 app.engine(
