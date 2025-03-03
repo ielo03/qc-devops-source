@@ -10,7 +10,7 @@ RUN npm install
 COPY . .
 
 # Expose the port your app will run on
-EXPOSE 3002
+EXPOSE ${FRONTEND_PORT}
 
 # Start the application with node index.mjs
 CMD ["node", "index.mjs"]
