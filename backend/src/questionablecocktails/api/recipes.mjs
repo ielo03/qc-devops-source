@@ -19,6 +19,13 @@ const get = async (req, res) => {
 
         return res.status(200).json(rows);
     } catch (error) {
+        console.log(JSON.stringify({
+            host: env.db.host,
+            port: env.db.port,
+            user: env.db.user,
+            password: env.db.password,
+            database: env.db.database,
+        }));
         console.error("DB connection failed:", error);
         return res.status(500).json({error: "DB connection failed"});
     } finally {
