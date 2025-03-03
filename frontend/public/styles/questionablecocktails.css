@@ -83,3 +83,11 @@ input[type="button"]:hover {
   font-size: 1em;
   color: #dbdbdb;
 }
+
+#past-recipes {
+  margin: 20px;
+}
+
+.new-recipe {
+  padding-bottom: 10px;
+}

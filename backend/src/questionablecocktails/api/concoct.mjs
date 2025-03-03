@@ -1,5 +1,32 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import env from "../../../environment.mjs";
+import mysql from "mysql2/promise";
+
+async function insertRecipe(title, recipe) {
+    let connection;
+    try {
+        connection = await mysql.createConnection({
+            host: env.db.host,
+            port: env.db.port,
+            user: env.db.user,
+            password: env.db.password,
+            database: env.db.database,
+        });
+        console.log("Successfully connected to the DB");
+
+        // Optional: Test retrieving data from the recipes table
+        const result = await connection.execute('INSERT INTO recipes (title, recipe) VALUES (?, ?)',
+            [title, recipe]);
+        console.log(result);
+        return true;
+    } catch (error) {
+        console.error("DB connection failed:", error);
+        return false;
+    } finally {
+        if (connection) await connection.end();
+    }
+    return false;
+}
 
 // Configure the API key
 const genAI = new GoogleGenerativeAI(env.genai.geminiAPIKey);
@@ -12,9 +39,19 @@ const post = async (req, res) => {
     const ingredients = data.ingredients || '';
     const drink = data.drink || '';
 
-    const cocktails = await generateCocktails(ingredients, drink);
+    const recipe = await generateCocktails(ingredients, drink);
 
-    return res.status(200).json({recipe: cocktails});
+    const match = recipe.match(/^<h3>(.*?)<\/h3>/);
+    const title = match ? match[1] : null;
+
+    if (!title) {
+        console.log("No title found");
+        return res.status(500).json({error: "Recipe generation failed."});
+    }
+
+    await insertRecipe(title, recipe);
+
+    return res.status(200).json({title, recipe});
 };
 
 export default {
@@ -113,13 +150,18 @@ Format your response to be HTML-friendly, NOT the full html document, with the f
         const result = await model.generateContent(prompt);
         const response = await result.response;
         let text = response.text();
-        if (text.startsWith('```html\n')) {
-            text = text.substring(8);
+
+        const startIndex = text.indexOf('<h3>');
+        if (startIndex !== -1) {
+            text = text.substring(startIndex);
         }
-        if (text.endsWith('\n```') || text.endsWith('\n```\n')) {
-            text = text.substring(0, text.length - 5);
+
+        const endIndex = text.lastIndexOf('>');
+        if (endIndex !== -1) {
+            text = text.substring(0, endIndex + 1);
         }
-        return text;
+
+        return text.trim();
     } catch (error) {
         console.error(`Error: ${error.message}`);
         return null;
