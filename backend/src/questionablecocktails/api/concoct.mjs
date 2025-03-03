@@ -49,7 +49,9 @@ const post = async (req, res) => {
         return res.status(500).json({error: "Recipe generation failed."});
     }
 
-    await insertRecipe(title, recipe);
+    if (!await insertRecipe(title, recipe)) {
+        console.log("Database insert failed.")
+    }
 
     return res.status(200).json({title, recipe});
 };

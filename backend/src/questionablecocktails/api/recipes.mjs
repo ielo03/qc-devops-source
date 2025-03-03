@@ -20,7 +20,7 @@ const get = async (req, res) => {
         return res.status(200).json(rows);
     } catch (error) {
         console.error("DB connection failed:", error);
-        process.exit(1);
+        return res.status(500).json({error: "DB connection failed"});
     } finally {
         if (connection) await connection.end();
     }
