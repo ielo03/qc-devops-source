@@ -17,4 +17,4 @@ RUN chmod +x /usr/local/bin/wait-for-it.sh
 EXPOSE ${BACKEND_PORT}
 
 # Start the app after waiting for the MySQL service
-CMD ["sh", "-c", "wait-for-it.sh ${DB_HOST}:${DB_PORT} -- node index.mjs"]
+CMD ["sh", "-c", "wait-for-it.sh ${DB_HOST}:${DB_PORT} --timeout=30 -- node index.mjs"]
