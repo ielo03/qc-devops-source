@@ -47,11 +47,11 @@ services:
     environment:
       BACKEND_HOST: ${BACKEND_HOST:-0.0.0.0}
       BACKEND_PORT: ${BACKEND_PORT:-3002}
-      DB_HOST: ${DB_HOST:-mysql}
-      DB_PORT: ${DB_PORT:-3306}
-      DB_USER: ${DB_USER:-}
-      DB_PASSWORD: ${DB_PASSWORD:-}
-      DB_DATABASE: ${DB_DATABASE:-}
+      DB_HOST: ${MYSQL_HOST:-mysql}
+      DB_PORT: ${MYSQL_PORT:-3306}
+      DB_USER: ${MYSQL_USER:-}
+      DB_PASSWORD: ${MYSQL_PASSWORD:-}
+      DB_DATABASE: ${MYSQL_DATABASE:-}
       GEMINI_API_KEY: ${GEMINI_API_KEY:-}
 
   nginx:
