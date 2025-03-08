@@ -35,25 +35,30 @@ const genAI = new GoogleGenerativeAI(env.genai.geminiAPIKey);
 const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash", temperature: 0.9, top_p: 0.85 });
 
 const post = async (req, res) => {
-    const data = req.body;
-    const ingredients = data.ingredients || '';
-    const drink = data.drink || '';
+    try {
+        const data = req.body;
+        const ingredients = data.ingredients || '';
+        const drink = data.drink || '';
 
-    const recipe = await generateCocktails(ingredients, drink);
+        const recipe = await generateCocktails(ingredients, drink);
 
-    const match = recipe.match(/^<h3>(.*?)<\/h3>/);
-    const title = match ? match[1] : null;
+        const match = recipe.match(/^<h3>(.*?)<\/h3>/);
+        const title = match ? match[1] : null;
 
-    if (!title) {
-        console.log("No title found");
+        if (!title) {
+            console.log("No title found");
+            return res.status(500).json({error: "Recipe generation failed."});
+        }
+
+        if (!await insertRecipe(title, recipe)) {
+            console.log("Database insert failed.")
+        }
+
+        return res.status(200).json({title, recipe});
+    } catch (err) {
+        console.error(err);
         return res.status(500).json({error: "Recipe generation failed."});
     }
-
-    if (!await insertRecipe(title, recipe)) {
-        console.log("Database insert failed.")
-    }
-
-    return res.status(200).json({title, recipe});
 };
 
 export default {
